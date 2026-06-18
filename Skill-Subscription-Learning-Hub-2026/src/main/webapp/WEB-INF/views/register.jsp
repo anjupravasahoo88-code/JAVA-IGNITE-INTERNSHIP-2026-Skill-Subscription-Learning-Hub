@@ -1,57 +1,33 @@
-<!--
-	Why it is used:
-
-	This is where a new user is created in the system.
-
-	What it does:
-	Collects user details (name, email, password, etc.)
-	Sends data to backend
-	Stores user in database
-	Why it is needed:
-
-	Without registration:
-
-	No new users can join your system
-	Login would be useless
-	Simple flow:
-
-	User - fills form -submits -data saved in DB - account created
--->
-<%@ page contentType="text/html;charset=UTF-8" %>
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>Register</title>
-    <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
 
-<div class="header">
-    <img src="/images/logo.png">
-    <h2>Skill Subscription Hub</h2>
-</div>
+<h2>Register</h2>
 
-<div class="container">
+<input id="name" placeholder="Name"><br><br>
+<input id="email" placeholder="Email"><br><br>
+<input id="password" placeholder="Password"><br><br>
 
-    <h3>Register</h3>
+<button onclick="register()">Register</button>
 
-    <form action="/register" method="post">
-
-        <!--  enter name -->
-        <input type="text" name="name" placeholder="Name">
-
-        <!--  enter email -->
-        <input type="text" name="email" placeholder="Email">
-
-        <!--  enter password -->
-        <input type="password" name="password" placeholder="Password">
-
-        <button type="submit">Register</button>
-
-    </form>
-
-</div>
+<script>
+function register() {
+    fetch("http://localhost:8080/register", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        })
+    })
+    .then(res => res.text())
+    .then(data => alert(data));
+}
+</script>
 
 </body>
 </html>
